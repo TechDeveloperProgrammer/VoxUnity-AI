@@ -1,0 +1,31 @@
+{
+    "name": "VoxUnity AI+ Development Container",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".."
+    },
+    "settings": {
+        "python.pythonPath": "/usr/local/bin/python"
+    },
+    "extensions": [
+        "ms-python.python",
+        "ms-vscode.vscode-linter-flake8",
+        "ms-vscode.vscode-linter-pylint",
+        "ms-vscode.vscode-typescript-next",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+    ],
+    "postCreateCommand": "pip install -e .[dev] && npm install",
+    "forwardPorts": [5000, 8000], # API y MkDocs
+    "portsAttributes": {
+        "5000": {
+            "label": "API Server",
+            "onAutoForward": "notify"
+        },
+        "8000": {
+            "label": "MkDocs Server",
+            "onAutoForward": "notify"
+        }
+    },
+    "remoteUser": "vscode"
+}

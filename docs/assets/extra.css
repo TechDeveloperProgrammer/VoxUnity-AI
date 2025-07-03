@@ -1,0 +1,18 @@
+/* Custom CSS for VoxUnity AI+ Documentation */
+
+:root {
+    --md-primary-fg-color: #673ab7; /* Deep Purple */
+    --md-accent-fg-color: #3f51b5; /* Indigo */
+}
+
+.md-header {
+    background-color: var(--md-primary-fg-color);
+}
+
+.md-tabs {
+    background-color: var(--md-primary-fg-color);
+}
+
+.md-tabs__link--active {
+    color: var(--md-accent-fg-color);
+}

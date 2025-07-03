@@ -1,0 +1,75 @@
+site_name: VoxUnity AI+ Documentation
+site_url: https://your-username.github.io/voxunity-ai/
+
+nav:
+  - Home: index.md
+  - Getting Started: getting_started.md
+  - CLI: cli.md
+  - API: api.md
+  - Modules:
+    - Voice: modules/voice.md
+    - Streaming: modules/streaming.md
+    - Ally: modules/ally.md
+    - Therapy: modules/therapy.md
+    - VTuber: modules/vtuber.md
+    - Activism: modules/activism.md
+    - Educator: modules/educator.md
+    - Mobile: modules/mobile.md
+    - Devtools: modules/devtools.md
+    - Accessibility: modules/accessibility.md
+  - Development:
+    - Contribution Guide: contributing.md
+    - Code of Conduct: code_of_conduct.md
+    - Security Policy: security.md
+    - Dev Container: devcontainer.md
+  - FAQ: faq.md
+  - About: about.md
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: deep purple
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to dark mode
+    - scheme: slate
+      primary: blue grey
+      accent: light blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotate
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - attr_list
+  - md_in_html
+
+extra_css:
+  - assets/extra.css
+
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js
+  - javascripts/extra.js
+
+copyright: Copyright &copy; 2025 VoxUnity AI+ Team
