@@ -1,20 +1,19 @@
-FROM python:3.12-slim-bullseye
+# 🔧 Imagen base actualizada (soluciona problema con libxkbcommon-x11)
+FROM python:3.12-slim-bookworm
 
-# Evitar que Python escriba archivos .pyc
-ENV PYTHONDONTWRITEBYTECODE 1
+# 🔒 Buenas prácticas
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV DEBIAN_FRONTEND=noninteractive
 
-# Desactivar el almacenamiento en búfer de la salida estándar de Python
-ENV PYTHONUNBUFFERED 1
-
-# Crear un usuario no root para desarrollo
+# 🧑 Crear un usuario no root para desarrollo
 ARG USERNAME=vscode
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
-RUN groupadd --gid $USER_GID $USERNAME \
-    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends \
+# 📦 Instalar dependencias del sistema
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
     build-essential \
     libsm6 \
     libxext6 \
@@ -27,25 +26,40 @@ RUN groupadd --gid $USER_GID $USERNAME \
     libpq-dev \
     gettext \
     curl \
-    # Instalar Node.js y npm para dependencias JS
-    && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    libgl1-mesa-glx \
+    libegl1-mesa \
+    libxkbcommon0 \
+    x11-utils \
+    xdg-utils \
+    ca-certificates && \
+    curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# Copiar el código de la aplicación
+# 🧑 Crear el usuario no root
+RUN groupadd --gid $USER_GID $USERNAME && \
+    useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
+
+# 🗂️ Copiar código fuente
 COPY . /app
 WORKDIR /app
 
-# Cambiar el propietario del directorio de trabajo al usuario no root
+# 🔒 Asignar permisos
 RUN chown -R $USERNAME:$USERNAME /app
 
-# Cambiar al usuario no root
+# 🔧 Usar usuario no root
 USER $USERNAME
 
-# Exponer puertos
+# 🐍 Actualizar pip y herramientas de build (recomendado por problemas con pkg_resources y Python 3.12)
+RUN pip install --no-cache-dir --upgrade pip setuptools setuptools_scm wheel
+
+# 🔁 Instalar proyecto en modo editable con extras para desarrollo
+RUN pip install --no-cache-dir -e ".[dev,postgres]"
+
+# 🌐 Exponer puertos
 EXPOSE 5000
 EXPOSE 8000
 
-# Comando por defecto (se ejecutará en el contenedor)
-CMD ["bash"]
+# 🔧 Comando por defecto
+CMD [ "bash" ]
