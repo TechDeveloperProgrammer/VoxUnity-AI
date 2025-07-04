@@ -22,10 +22,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq-dev \
     libgl1-mesa-glx \
     libegl1-mesa \
-    libxkbcommon-x11 \
+    libxkbcommon0 \
+    libxkbcommon-x11-0 \
     gettext \
     curl \
-    # 🔧 Node.js y npm (útil para frontend, JS deps)
     && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs \
     && apt-get clean \
